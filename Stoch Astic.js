@@ -74,10 +74,9 @@ true==function()
     }
     stochastic(5,3,3);
 
-    if ( [ih][1].k <= [ih][1].d && [ih][0].k > [ih][0].d && [ih][0].k<25)
+    if ( [ih][2].k<=[ih][2].d &&[ih][1].k <= [ih][1].d && [ih][0].k > [ih][0].d && [ih][0].k<25)
     {
-        (cfield0)="<h4>در نماد "+(l18)+" کراس خطوط K و D در Stoch Astic اتفاق افتاده است.</h4>";
-        (cfield1)="k% = "+String([ih][0].k)+" d% = "+String([ih][0].d);
+        (cfield0)="k% = "+String([ih][0].k)+" ,d% = "+String([ih][0].d);
         return true;
     }
 }()
