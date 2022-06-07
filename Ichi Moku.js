@@ -31,11 +31,11 @@ true==function()
         [ih][1].history=true;
     }
 
-    function ichi_moku(tenkan_period, kijun_period)
+    function ichi_moku(tenkan_period, kijun_period, span_B_period)
     {
         let len = [ih].length-1;
-        if ( len <= kijun_period) return;
-        for ( let i=0 ; i<len-kijun_period ; i++ )
+        if ( len <= span_B_period) return;
+        for ( let i=0 ; i<len-span_B_period ; i++ )
         {
             let highest = 0;
             let lowest = 1000000;
@@ -60,14 +60,36 @@ true==function()
                 {
                     highest = [ih][j].PriceMax;
                     highest_candle = j ;
-                }
+                }     
+            }
                 [ih][i].kijun = (highest + lowest)/2;
-                [ih][i].highest_candle = highest_candle;
-                [ih][i].lowest_candle = lowest_candle;
+                highest = 0;
+                lowest = 1000000;
+                highest_candle = 0;
+                lowest_candle = 0;
+                for ( let j=i ; j<i+span_B_period ; j++)
+                {
+                    if (lowest > [ih][j].PriceMin)
+                    {
+                        lowest = [ih][j].PriceMin;
+                        lowest_candle = j;
+                    }
+                    if ( highest < [ih][j].PriceMax)
+                    {
+                        highest = [ih][j].PriceMax;
+                        highest_candle = j ;
+                    }
+                    [ih][i].span_B = (highest + lowest)/2;
+                    [ih][i].span_A = ([ih][i].tenkan + [ih][i].kijun)/2;
+                    [ih][i].highest_candle = highest_candle;
+                    [ih][i].lowest_candle = lowest_candle;
+
             }
         }
     }
-    ichi_moku(9, 26);
+
+    ichi_moku(9, 26, 52);
+
     if ( (l18)=="فولاد")
     {
         (cfield1)="Tenkan = "+String([ih][0].tenkan);
@@ -75,4 +97,6 @@ true==function()
         return true;
     }
 
+
 }()
+
